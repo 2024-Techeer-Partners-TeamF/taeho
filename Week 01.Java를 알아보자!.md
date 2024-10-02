@@ -88,7 +88,7 @@ public class OperationEx1 {
 }
 ```
 int형 변수 score선언. Score가 80점 이상이고, 100점 이하면 true, 아니면 false 출력.
-```commandline
+```
 public class OperationEx2 {
     public static void main(String[] args) {
         int score=80;
@@ -142,4 +142,196 @@ public class ScoreEx {
 ```
 ___
 ##### 반복문 
-while, do-while, for이 존재.
+while, do-while, for이 존재.<br/>
+while 문은 
+```
+while (조건식) {
+실행코드
+}
+```
+do-while문은 조건에 상관없이 무조건 한 번은 코드를 실행.
+```
+do{
+실행코드
+} while (조건문)
+```
+break, continue
+```
+while(조건식) {
+코드1
+break; 즉시 while 종료
+}
+```
+```
+while(조건식){
+코드1
+continue; //즉시 조건으로 이동.
+}
+```
+for문은 주로 반복횟수가 정해져있을때 사용.
+```
+for (int i=1; i<=10; i++)
+{
+}
+```
+int rows를 선언 후, 이 수만큼 다음과 같은 피라미드 출력.
+```
+public class Pyramid {
+    public static void main(String[] args) {
+        int rows=5;
+        for (int i=1; i<=rows; i++) {
+            for (int j=1; j<=i; j++){
+                System.out.print("*");
+            }
+            System.out.println();
+        }
+    }
+```
+___
+##### 지역변수와 스코프
+지역변수란 특정 지역에서만 사용할 수 있는 변수이다. 코드 블록 안에서 선언한 변수는 블록 안에서만 사용 가능하다.<br/>
+이렇게 변수의 접근 가능한 범위를 스코프라고 한다. 비효율적인 메모리 사용과 코드 복잡성을 피하기 위해 변수를 잘 선언해주어야 한다.<br/>
+##### 형변환
+작은 범위에서 큰 범위는 당연히 값을 넣을 수 있다. 다만 반대의 경우는 소수점버림, 오버플로우가 발생할 수 있다.
+```
+public static void main(String[] args) {
+        int rows = 5;
+        double doublerows;
+        doublerows =(double) rows;
+        System.out.println(doublerows);
+    }
+```
+- 같은 타입끼리의 계산은 같은 타입의 결과를 낸다. int+int=int,double+double=double
+- 서로 다른 타입의 계산은 큰 범위로 자동 형변환이 일어난다. int+long은 long+long으로 int+double은 double+double
+___
+##### Scanner<br/>
+바로 문제로 가보자..
+- 사용자로부터 상품정를 입력받고, 총 가격을 출력하는 프로그램 작 사용자는 여러상품 추가하고 결제가능하고 언제든 종료가능.
+-  1. 상품입력 2.결제 3.프로그램 종료 옵션을 정수로 입력받도록 제공
+- 상품 입력 옵션을 선택하면 상품명과 가격 수량을 입력받기
+- 결제 옵션을 선택하면, 총 비용을 출력하고 총 비용을 0으로 초기화
+- 프로그램 종료 옵션을 선택하면 프로그램 종료
+```
+package Operation;
+import java.util.Scanner;
+public class Price {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        int totalcast=0;
+
+        while(true){
+            System.out.println("1: 상품 입력, 2: 결제, 3: 프로그램 종료");
+            int option = input.nextInt();
+
+            if (option==1){
+                input.nextLine();
+
+                System.out.print("상품명을 입력하세요: ");
+                String product=input.next();
+
+                System.out.print("상품의 가격을 입력하세요:");
+                int price=input.nextInt();
+
+                System.out.print("구매 수량을 입력하세요:");
+                int quantity= input.nextInt();
+                totalcast+=price*quantity;
+                System.out.println("상품명: "+product+"가격: "+price+"수량: "+quantity+"합계: "+totalcast);
+            }else if (option==2){
+                System.out.println("총 비용"+totalcast);
+                totalcast=0;
+            }else if (option==3){
+                System.out.println("프로그램을 종료합니다.");
+                break;
+            }else{
+            }
+        }
+    }
+}
+```
+___
+##### 배열
+배열은 다음과 같이 생성한다.
+```
+int[] students; 배열 변수 선언
+students=new int[5]; 배열 생성
+int [] students =new int[5] //이런식으로 한번에도 가능
+```
+new int[5]로 배열을 생성하면 배열의 크기만큼 메모리를 확보한다.<br/>
+배열을 생성하고 나면 자바는 메모리 어딘가에 있는 이 배열에 접근할 수 있는 참조값(주소)를 반환한다.<br/>
+앞서 선언한 배열 변수인 int[] students에 생성된 배열의 참조값을 보관한다.
+int[] students 변수는 new int[5]로 생성한 배열의 참조값을 가지고 있다.<br/>
+```
+int[] numbers = {1,2,3,4,5};
+for(int number : numbers) {
+    System.out.println(number);
+} //이런식으로 for문 사용도 가능하다!
+```
+문제<br/>
+자바를 이용하여 상품관리 프로그램을 만들어보자.
+- 상품 등록: 상품 이름과 가격을 입력받아 저장한다.
+- 상품 목록: 지금까지 등록한 모든 상품의 목록을 출력한다.
+- 첫 화면에서 사용자에게 세 가지 선택을 제시한다."1: 상품등록", "2: 상품 목록", "3: 종료"
+- 상품 등록을 선택하면, 사용자로부터 상품 이름과 가격을 입력받아 배열에 저장한다.
+- 상품 목록을 선택하면, 배열에 저장된 모든 상품을 출력한다.
+- 종료를 선택하면 프로그램을 종료한다.
+- 상품은 10개까지 등록가능하다.
+- Scanner,String[] productNames, int[] productPrices, int productCount 사용하라
+```
+package Operation;
+
+import java.util.Scanner;
+
+public class ProductManage {
+    public static void main(String[] args) {
+        int maxProducts =10;
+        String[] productNames = new String[maxProducts];
+        int[] productPrices = new int[maxProducts];
+        int productCount = 0;
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("1. 상품등록 | 2. 상품목록 | 3. 종료");
+            System.out.print("메뉴를 선택하세요: ");
+            int menu = scanner.nextInt();
+            scanner.nextLine();
+            if (menu == 1) {
+                if (productCount>=maxProducts) {
+                    System.out.println("더 이상 상품 등록이 불가합니다.");
+                }
+                System.out.print("상품 이름을 입력하세요:");
+                productNames[productCount] = scanner.nextLine();
+
+                System.out.print("상품 가격을 입력하세요:");
+                productPrices[productCount] = scanner.nextInt();
+
+                productCount++;
+            }else if(menu==2){
+                for (int i=0; i<productCount; i++) {
+                    System.out.println(productNames[i] + " :" + productPrices[i]);
+                }
+            }else if(menu==3){
+                System.out.println("프로그램을 종료합니다.");
+                break;
+            }
+        }
+    }
+}
+```
+___
+##### 메서드
+자바에서는 함수를 메서드라고 한다.
+```
+public static int add(int a,int b) {
+    //메서드 본문, 실행코드
+}
+제어자 반환타입 메서드이름(매개변수 목록) {
+    메서드 본문
+}
+```
+- 제어자(Modifier):public,static과 같은 부분.
+- 반환 타입(Return Type): 메서드가 실행 된 후 반환하는 데이터의 타입을 지정. 메서드가 값을 반환하지 않는 경우, 없다는 뜻의 void를 사용한다.
+- 메서드 이름(Method Name): 메서드의 이름이다. 이 이름은 메서드를 호출하는데 사용된다.
+- 매개변수(Parameter): 입력 값으로, 메서드 내부에서 사용할 수 있는 변수이다. 매개변수는 옵션이다.
+- 메서드 본문(Method Body): 실제 메서드의 코드가 위치한다. 중괄호 {}사이에 코드를 작성한다.
+<br/>
+
